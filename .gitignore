@@ -1,0 +1,16 @@
+logs
+*.log
+*.tgz
+*.zip
+
+node_modules/
+mochawesome-report/
+.vscode/
+
+.npm
+.eslintcache
+.node_repl_history
+.env
+.env.test
+.cache
+*hot-update*
