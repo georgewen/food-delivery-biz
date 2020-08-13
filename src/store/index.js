@@ -10,7 +10,7 @@ export default new Vuex.Store({
     CurrentUser: 'george',
     cartItems: cart ? JSON.parse(cart) : [],
     Orders: [          
-      {OrderNumber:1, OrderDate: '2020-07-01', SubTotal: 25.56, Status: 'Delivered',UserName: 'george', OrderLines: [{id:1,restaurant: 'A',qty:1, price: 12.34},{id:2,restaurant: 'BA',qty:2,price:23.45}] },
+      {OrderNumber:1, OrderDate: '2020-07-01', SubTotal: 25.56, Status: 'Delivered',UserName: 'george', OrderLines: [{id:1,restaurant: 'A',qty:1, price: 12.34},{id:2,restaurant: 'B',qty:2,price:23.45}] },
       {OrderNumber:2, OrderDate: '2020-07-02', SubTotal: 25.56, Status: 'Delivered',UserName: 'ethan',  OrderLines: [{id:1,restaurant: 'A',qty:1, price: 12.34},{id:2,restaurant: 'B',qty:2,price:23.45}] },
       {OrderNumber:3, OrderDate: '2020-07-03', SubTotal: 25.56, Status: 'Delivered',UserName: 'george', OrderLines: [{id:1,restaurant: 'A',qty:1, price: 12.34},{id:2,restaurant: 'B',qty:2,price:23.45}] },
       {OrderNumber:4, OrderDate: '2020-07-04', SubTotal: 25.56, Status: 'Delivered',UserName: 'ethan',  OrderLines: [{id:1,restaurant: 'A',qty:1, price: 12.34},{id:2,restaurant: 'B',qty:2,price:23.45}] }
