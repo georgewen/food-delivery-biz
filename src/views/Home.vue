@@ -16,6 +16,7 @@
           <img :src="item.image" class="card-img-top" alt="...">
           <div class="card-body">
             <h5 class="card-title">{{item.name}}</h5>
+            <h6 class="card-text">Restaurant: {{item.restaurant}}</h6>
             <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
             <p class="text-center"><input v-model="item.qty" type="number" class="form-control" placeholder="Qty" min="1" hidden /></p>
             <button class="btn btn-primary mt-auto" @click="addToCart(item)">Add</button>
@@ -45,7 +46,8 @@ export default {
                     name: "english breakfast",
                     price: 12.34,
                     qty:1,
-                    image: "/images/1.jpg",
+                    restaurant: 'A',
+                    image: "https://via.placeholder.com/400x300.jpg",
                     description: "???"
                 },
                 {
@@ -53,7 +55,8 @@ export default {
                     name: "pizza",
                     price: 23.45,
                     qty:1,
-                    image: "/images/2.jpg",
+                    restaurant: 'B',
+                    image: "https://via.placeholder.com/400x300.jpg",
                     description: "????"
                 },
                 {
@@ -61,7 +64,8 @@ export default {
                     name: "hamburger",
                     price: 23.45,
                     qty:1,
-                    image: "/images/3.jpg",
+                    restaurant: 'A',
+                    image: "https://via.placeholder.com/400x300.jpg",
                     description: "????"
                 },
                 {
@@ -69,7 +73,8 @@ export default {
                     name: "pizza 2",
                     price: 23.45,
                     qty:1,
-                    image: "https://via.placeholder.com/500x400.jpg",
+                    restaurant: 'A',
+                    image: "https://via.placeholder.com/400x300.jpg",
                     description: "????"
                 },
                 {
@@ -77,7 +82,8 @@ export default {
                     name: "pizza 3",
                     price: 23.45,
                     qty:1,
-                    image: "https://via.placeholder.com/500x400.jpg",
+                    restaurant: 'B',
+                    image: "https://via.placeholder.com/400x300.jpg",
                     description: "????"
                 },
                 {
@@ -85,7 +91,8 @@ export default {
                     name: "pizza 4",
                     price: 23.45,
                     qty:1,
-                    image: "https://via.placeholder.com/500x400.jpg",
+                     restaurant: 'B',
+                    image: "https://via.placeholder.com/400x300.jpg",
                     description: "????"
                 },
                 {
@@ -93,7 +100,8 @@ export default {
                     name: "pizza 5",
                     price: 23.45,
                     qty:1,
-                    image: "https://via.placeholder.com/500x400.jpg",
+                    restaurant: 'B',
+                    image: "https://via.placeholder.com/400x300.jpg",
                     description: "????"
                 },                                                
                 {
@@ -101,7 +109,8 @@ export default {
                     name: "pizza 6",
                     price: 23.45,
                     qty:1,
-                    image: "https://via.placeholder.com/500x400.jpg",
+                    restaurant: 'B',
+                    image: "https://via.placeholder.com/400x300.jpg",
                     description: "????"
                 },                
             ]

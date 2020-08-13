@@ -1,8 +1,18 @@
 <template>
-   
+<div>
+
+<div class="modal" tabindex="-1" role="dialog" id="modalCheckoutForm">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Check Out</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="btnClose">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
       <div class="modal-body mx-3">
 
-        <form class="needs-validation" novalidate="">
+       <form class="needs-validation" novalidate="" @submit="validateForm" id="modalPayForm">
           <div class="row">
             <div class="col-md-6 mb-3">
               <label for="firstName">First name</label>
@@ -121,9 +131,88 @@
         </form>
 
       </div>
+
+    </div>
+  </div>
+</div>
+
+    <table class="table table-cart">
+        <tr v-for="(item, index) in cartItems" :key="index">
+        <td>{{item.name}}</td>
+        <td>{{item.restaurant}}</td>
+        <td>QTY: <input v-model="item.qty" class="form-control input-qty" type="number" size="10">
+        </td>
+        <td class="text-right">${{item.price}}</td>
+        <td>
+            <button @click="removeItem(item)"><span class="glyphicon glyphicon-trash">Delete</span></button>
+        </td>
+        </tr>
+        <tr v-show="cartItems.length === 0">
+        <td colspan="5" class="text-center">Cart is empty</td>
+        </tr>
+        <tr v-show="cartItems.length > 0">
+            <td></td>            
+            <td></td>
+            <td class="text-right">Cart Total</td>
+            <td class="text-right">${{Total}}</td>
+            <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>          <td></td>
+
+          <td>
+              <a href="" class="btn btn-primary align-right" data-toggle="modal" data-target="#modalCheckoutForm">Check Out</a>
+              </td>
+          <!-- <td><router-link to="/CheckOut" tag="button" class="btn btn-primary align-right">CheckOut</router-link></td> -->
+        </tr>        
+    </table>
+</div>    
 </template>
+
 <script>
+import { mapState } from 'vuex'
+
 export default {
-    
+    //name:'ShoppingCart',
+    //props: ['items'],    
+    computed:{
+        cartLength() { return this.$store.getters.cartLength },
+        ...mapState(['cartItems']),
+
+        Total() {
+            let total = 0;
+            this.cartItems.forEach(item => {
+                total += (item.price * item.qty);
+            });
+            return total.toFixed(2);
+            }
+        
+    },
+    methods:{
+
+        removeItem(item){
+            this.$store.commit('removeItem',item);
+        },
+        validateForm() {
+          var form = document.getElementById("modalPayForm")
+          if (form.checkValidity() === false) {
+            event.preventDefault()
+            event.stopPropagation()
+          }
+          else
+          {
+            //create order
+            document.getElementById("btnClose").click()
+            event.preventDefault()
+            this.$store.commit('submitOrder')            
+          }
+          form.classList.add('was-validated')
+
+            // }
+        },
+    }
 }
+
 </script>
