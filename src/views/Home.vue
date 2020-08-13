@@ -16,7 +16,8 @@
           <img :src="item.image" class="card-img-top" alt="...">
           <div class="card-body">
             <h5 class="card-title">{{item.name}}</h5>
-            <h6 class="card-text">Restaurant: {{item.restaurant}}</h6>
+            <h6 class="card-text">From: {{item.restaurant}}</h6>
+            <h6 class="card-text">Price: {{item.price}}</h6>
             <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
             <p class="text-center"><input v-model="item.qty" type="number" class="form-control" placeholder="Qty" min="1" hidden /></p>
             <button class="btn btn-primary mt-auto" @click="addToCart(item)">Add</button>

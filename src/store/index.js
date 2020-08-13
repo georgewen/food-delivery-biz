@@ -10,10 +10,10 @@ export default new Vuex.Store({
     CurrentUser: 'george',
     cartItems: cart ? JSON.parse(cart) : [],
     Orders: [          
-      {OrderNumber:1, OrderDate: '2020-07-01', SubTotal: 25.56, Status: 'Delivered',UserName: 'george', OrderLines: [{id:1,restaurant: 'A',qty:1, price: 12.34},{id:2,restaurant: 'B',qty:2,price:23.45}] },
-      {OrderNumber:2, OrderDate: '2020-07-02', SubTotal: 25.56, Status: 'Delivered',UserName: 'ethan',  OrderLines: [{id:1,restaurant: 'A',qty:1, price: 12.34},{id:2,restaurant: 'B',qty:2,price:23.45}] },
-      {OrderNumber:3, OrderDate: '2020-07-03', SubTotal: 25.56, Status: 'Delivered',UserName: 'george', OrderLines: [{id:1,restaurant: 'A',qty:1, price: 12.34},{id:2,restaurant: 'B',qty:2,price:23.45}] },
-      {OrderNumber:4, OrderDate: '2020-07-04', SubTotal: 25.56, Status: 'Delivered',UserName: 'ethan',  OrderLines: [{id:1,restaurant: 'A',qty:1, price: 12.34},{id:2,restaurant: 'B',qty:2,price:23.45}] }
+      {OrderNumber:1, OrderDate: '2020-07-01', SubTotal: 59.24, Status: 'Delivered',UserName: 'george', OrderLines: [{id:1,restaurant: 'Macdonald',qty:1, price: 12.34},{id:2,restaurant: 'Domino',qty:2,price:23.45}] },
+      {OrderNumber:2, OrderDate: '2020-07-02', SubTotal: 59.24, Status: 'Delivered',UserName: 'ethan',  OrderLines: [{id:1,restaurant: 'Macdonald',qty:1, price: 12.34},{id:2,restaurant: 'Domino',qty:2,price:23.45}] },
+      {OrderNumber:3, OrderDate: '2020-07-03', SubTotal: 59.24, Status: 'Delivered',UserName: 'george', OrderLines: [{id:1,restaurant: 'Macdonald',qty:1, price: 12.34},{id:5,restaurant: 'Ms Pho',qty:2,price:23.45}] },
+      {OrderNumber:4, OrderDate: '2020-07-04', SubTotal: 37.24, Status: 'Delivered',UserName: 'ethan',  OrderLines: [{id:1,restaurant: 'Macdonald',qty:1, price: 12.34},{id:6,restaurant: 'Ms Pho',qty:2,price:12.45}] }
     ],
   },
   mutations: {
@@ -70,7 +70,7 @@ export default new Vuex.Store({
       var lines = []
       var subtotal = 0
       state.cartItems.forEach(line=> {        
-        lines.push({Id: line.Id, name: line.name, qty: line.qty, price: line.price})
+        lines.push({Id: line.Id, name: line.name, qty: line.qty, price: line.price, restaurant: line.restaurant})
           subtotal += line.qty*line.price
         }
       )
