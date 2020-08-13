@@ -46,8 +46,8 @@ export default {
                     name: "english breakfast",
                     price: 12.34,
                     qty:1,
-                    restaurant: 'A',
-                    image: "https://via.placeholder.com/400x300.jpg",
+                    restaurant: 'Macdonald',
+                    image: "img/1.jpg",
                     description: "???"
                 },
                 {
@@ -55,8 +55,8 @@ export default {
                     name: "pizza",
                     price: 23.45,
                     qty:1,
-                    restaurant: 'B',
-                    image: "https://via.placeholder.com/400x300.jpg",
+                    restaurant: 'Domino',
+                    image: "img/2.jpg",
                     description: "????"
                 },
                 {
@@ -64,53 +64,53 @@ export default {
                     name: "hamburger",
                     price: 23.45,
                     qty:1,
-                    restaurant: 'A',
-                    image: "https://via.placeholder.com/400x300.jpg",
+                    restaurant: 'Macdonald',
+                    image: "img/3.jpg",
                     description: "????"
                 },
                 {
                     Id: 4,
-                    name: "pizza 2",
+                    name: "Hash Brown",
                     price: 23.45,
                     qty:1,
-                    restaurant: 'A',
-                    image: "https://via.placeholder.com/400x300.jpg",
+                    restaurant: 'Macdonald',
+                    image: "img/10.jpeg",
                     description: "????"
                 },
                 {
                     Id: 5,
-                    name: "pizza 3",
+                    name: "Special Beef Noodle",
                     price: 23.45,
                     qty:1,
-                    restaurant: 'B',
-                    image: "https://via.placeholder.com/400x300.jpg",
+                    restaurant: 'Ms Pho',
+                    image: "img/20.jpeg",
                     description: "????"
                 },
                 {
                     Id: 6,
-                    name: "pizza 4",
-                    price: 23.45,
+                    name: "Rice Roll",
+                    price: 12.45,
                     qty:1,
-                     restaurant: 'B',
-                    image: "https://via.placeholder.com/400x300.jpg",
+                    restaurant: 'Ms Pho',
+                    image: "img/21.jpeg",
                     description: "????"
                 },
                 {
                     Id: 7,
-                    name: "pizza 5",
-                    price: 23.45,
+                    name: "Chicken Noodle",
+                    price: 12.45,
                     qty:1,
-                    restaurant: 'B',
-                    image: "https://via.placeholder.com/400x300.jpg",
+                    restaurant: 'Ms Pho',
+                    image: "img/22.jpeg",
                     description: "????"
                 },                                                
                 {
                     Id: 8,
-                    name: "pizza 6",
-                    price: 23.45,
+                    name: "Crispy Chicken Rice",
+                    price: 15.45,
                     qty:1,
-                    restaurant: 'B',
-                    image: "https://via.placeholder.com/400x300.jpg",
+                    restaurant: 'Ms Pho',
+                    image: "img/23.jpeg",
                     description: "????"
                 },                
             ]
