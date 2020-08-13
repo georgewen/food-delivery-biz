@@ -134,12 +134,13 @@ export default {
           svg.append("g")
               //.attr("class", "x axis")
               .attr("transform", "translate(0," + height + ")")
-              .call(d3.axisBottom(xScale)); // Create an axis component with d3.axisBottom
+              .call(d3.axisBottom(xScale)) // Create an axis component with d3.axisBottom
+              //.showXAxis(false);
 
           // 4. Call the y axis in a group tag
           svg.append("g")
              // .attr("class", "y axis")
-              .call(d3.axisLeft(yScale)); // Create an axis component with d3.axisLeft
+              .call(d3.axisLeft(yScale)) // Create an axis component with d3.axisLeft
 
           // 9. Append the path, bind the data, and call the line generator 
 
@@ -158,6 +159,12 @@ export default {
                 .attr("cx", function(d, i) { return xScale(i) })
                 .attr("cy", function(d) { return yScale(d.SubTotal) })
                 .attr("r", 5)
+
+            svg.append("g")
+               .attr("transform", "translate(" + (width / 2 - 120) + "," + 20 + ")")
+               .append("text")
+               .text("amount per order")
+               .attr("class", "title")
 
       },
 
