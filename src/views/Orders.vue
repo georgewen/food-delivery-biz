@@ -7,6 +7,7 @@
           <th>Order Date</th>
           <th>Total</th>
           <th>Customer</th>
+          <th>Items</th>
           <th>Status</th>
         </tr>
       </thead>

@@ -5,6 +5,11 @@
           <td>{{ order.SubTotal }}</td>
           <td>{{ order.UserName }}</td>
           <td>
+            <div v-for="line in order.OrderLines" :key="line.Id">
+              <p>{{line.restaurant}} / {{line.name}} / {{line.qty}} / {{line.price}} </p>
+            </div>
+          </td>
+          <td>
             <select v-model="order.Status" :disabled="disabled">
               <option>Received</option>
               <option>Processing</option>

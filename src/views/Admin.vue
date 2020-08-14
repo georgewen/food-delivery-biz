@@ -10,6 +10,7 @@
           <th>Order Date</th>
           <th>Total</th>
           <th>Customer</th>
+          <th>Items</th>
           <th>Status</th>
           <th>Edit</th>
           <th>Delete</th>

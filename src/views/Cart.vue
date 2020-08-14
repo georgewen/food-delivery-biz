@@ -97,7 +97,7 @@
           <div class="row">
             <div class="col-md-6 mb-3">
               <label for="cc-name">Name on card</label>
-              <input type="text" class="form-control" id="cc-name" placeholder="" required="" :value="formInput.firstname + ' ' + formInput.lastname">
+              <input type="text" class="form-control" id="cc-name" placeholder="" :required="formInput.paymentmethod=='credit'? true: false" :value="formInput.firstname + ' ' + formInput.lastname">
               <small class="text-muted">Full name as displayed on card</small>
               <div class="invalid-feedback">
                 Name on card is required
@@ -105,7 +105,7 @@
             </div>
             <div class="col-md-6 mb-3">
               <label for="cc-number">Credit card number</label>
-              <input type="text" class="form-control" id="cc-number" placeholder="" required="" v-model="formInput.cc">
+              <input type="text" class="form-control" id="cc-number" placeholder="" :required="formInput.paymentmethod=='credit'? true: false" v-model="formInput.cc">
               <div class="invalid-feedback">
                 Credit card number is required
               </div>
@@ -114,14 +114,14 @@
           <div class="row">
             <div class="col-md-3 mb-3">
               <label for="cc-expiration">Expiration</label>
-              <input type="text" class="form-control" id="cc-expiration" placeholder="" required="" v-model="formInput.Expiry">
+              <input type="text" class="form-control" id="cc-expiration" placeholder="" :required="formInput.paymentmethod=='credit'? true: false" v-model="formInput.Expiry">
               <div class="invalid-feedback">
                 Expiration date required
               </div>
             </div>
             <div class="col-md-3 mb-3">
               <label for="cc-cvv">CVV</label>
-              <input type="text" class="form-control" id="cc-cvv" placeholder="" required="" v-model="formInput.cvv">
+              <input type="text" class="form-control" id="cc-cvv" placeholder="" :required="formInput.paymentmethod=='credit'? true: false" v-model="formInput.cvv">
               <div class="invalid-feedback">
                 Security code required
               </div>
@@ -191,7 +191,7 @@ export default {
           zip: "2000",
           phone: "99998888",
           paymentmethod: "credit",
-          cc: "1234-1234-1234-1234",
+          cc: "1234123412341234",
           Expiry: "2022-12-31",
           cvv: 100        
         }
@@ -232,7 +232,7 @@ export default {
         validateForm() {
 
           var form = document.getElementById("modalPayForm")
-          if (form.checkValidity() === false && this.formInput.paymentmethod != "cash") {
+          if (form.checkValidity() === false) { //} && this.formInput.paymentmethod != "cash") {
             event.preventDefault()
             event.stopPropagation()
           }
