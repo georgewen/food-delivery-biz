@@ -8,11 +8,16 @@
         <h4 class="modal-title w-100 font-weight-bold">Check Out</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="btnClose">
           <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
+        </button>        
+      </div>      
       <div class="modal-body mx-3">
 
-       <form class="needs-validation" novalidate="" @submit="validateForm" id="modalPayForm">
+       <form @submit="validateForm" id="modalPayForm" novalidate="true">
+         <div id="errorMsg" v-if="errors.length">
+          <ul>
+            <li v-for="error in errors" ><span style="color: red">{{ error }}</span></li>
+          </ul>     
+        </div>     
           <div class="row">
             <div class="col-md-6 mb-3">
               <label for="firstName">First name</label>
@@ -93,11 +98,27 @@
               <label class="custom-control-label" for="debit">Cash</label>
             </div>
           </div>
+
       <div id="cc" v-bind:style="{ display: formInput.paymentmethod=='cash'? 'none':'block' }">
+          <h4 class="mb-3">Choose Card</h4>
+          <div class="d-block my-3">
+            <div class="custom-control custom-radio">
+              <input id="master" name="CardType" type="radio" class="custom-control-input" checked="" :required="formInput.paymentmethod=='credit'? true: false"  v-model="formInput.cardtype" value="master">
+              <label class="custom-control-label" for="master">Master</label>
+            </div>
+            <div class="custom-control custom-radio">
+              <input id="visa" name="CardType" type="radio" class="custom-control-input" :required="formInput.paymentmethod=='credit'? true: false" v-model="formInput.cardtype" value="visa">
+              <label class="custom-control-label" for="visa">Visa</label>
+            </div>
+            <div class="custom-control custom-radio">
+              <input id="amex" name="CardType" type="radio" class="custom-control-input" :required="formInput.paymentmethod=='credit'? true: false"  v-model="formInput.cardtype" value="amex">
+              <label class="custom-control-label" for="amex">American Express</label>
+            </div>
+          </div>        
           <div class="row">
             <div class="col-md-6 mb-3">
               <label for="cc-name">Name on card</label>
-              <input type="text" class="form-control" id="cc-name" placeholder="" :required="formInput.paymentmethod=='credit'? true: false" :value="formInput.firstname + ' ' + formInput.lastname">
+              <input type="text" class="form-control" id="cc-name" placeholder="" :required="formInput.paymentmethod=='credit'? true: false" v-model="formInput.payer">
               <small class="text-muted">Full name as displayed on card</small>
               <div class="invalid-feedback">
                 Name on card is required
@@ -122,10 +143,7 @@
             </div>
             <div class="col-md-6 mb-3">
               <label for="cc-cvv">CVV</label>
-              <input type="text" class="form-control" id="cc-cvv" placeholder="" :required="formInput.paymentmethod=='credit'? true: false" v-model="formInput.cvv">
-              <div class="invalid-feedback">
-                Security code required
-              </div>
+              <input type="text" id="cc-cvv" placeholder="" :required="formInput.paymentmethod=='credit'? true: false" v-model="formInput.cvv">
             </div>
           </div>
     </div>
@@ -186,6 +204,7 @@ export default {
     data() {
       return {
         timeout: null,
+        errors:[],
         formInput: {
           firstname: "George",
           lastname: "Wen",
@@ -195,9 +214,11 @@ export default {
           zip: "2000",
           phone: "99998888",
           paymentmethod: "credit",
+          payer: "george Wen",
+          cardtype: 'master',
           cc: "1234123412341234",
-          Expiry: "2022-12-31",
-          cvv: 100        
+          Expiry: new Date(2022,12,31),
+          cvv: "120"        
         }
       }
     },
@@ -233,17 +254,67 @@ export default {
             this.$store.commit('removeItem',item);
         },
 
-        validateForm() {
-
-          var form = document.getElementById("modalPayForm")
-          if (form.checkValidity() === false) { //} && this.formInput.paymentmethod != "cash") {
-            event.preventDefault()
-            event.stopPropagation()
+        validateForm: function(e) {
+          
+          this.errors = []
+      
+          // if (form.checkValidity() === false) {
+          //     event.preventDefault()
+          //     event.stopPropagation()
+          //   }
+          //   else
+          // {
+          if (!this.formInput.firstname) {
+             this.errors.push("firstName required.");
           }
-          else
-          {
-            //custom validation logic here...
+          if (!this.formInput.lastname) {
+             this.errors.push("lastname required.");
+          }
+          if (!this.formInput.paymentmethod) {
+             this.errors.push("please choose payment method.");
+          }
+          if (!this.formInput.address) {
+             this.errors.push("address required.");
+          }
+          if (!this.formInput.zip) {
+             this.errors.push("postcode required.");
+          }
 
+          if (this.formInput.paymentmethod == 'credit') //vaidate cc payment
+          {
+            var today = new Date()
+            
+            if (this.formInput.Expiry < today ) { 
+              this.errors.push("credit card expired !")
+            }
+
+            if (this.formInput.cardtype == 'master' || this.formInput.cardtype == 'visa')
+            {
+                if (this.formInput.cc.length != 16) { 
+                  this.errors.push("wrong credit card number !")
+                }
+                if (this.formInput.cvv.length != 3) { 
+                  this.errors.push("cvv number is not valid !")
+                }
+            }
+            if (this.formInput.cardtype == 'amex')
+            {
+                if (this.formInput.cc.length != 15) { 
+                  this.errors.push("wrong credit card number !")
+                }      
+                if (this.formInput.cvv.length != 4) { 
+                  this.errors.push("cvv number is not valid !")
+                }
+            }
+          }
+          if (!this.formInput.email) {
+              this.errors.push('Email required.');
+          } else if (!this.validEmail(this.formInput.email)) {
+              this.errors.push('Valid email required.');
+          }
+
+          if (!this.errors.length) 
+          {
             //create order
             document.getElementById("btnClose").click()
             event.preventDefault()
@@ -255,11 +326,18 @@ export default {
             var maxId =  Math.max(...ordernumbers)
 
             this.timeout = setTimeout(() => this.$store.commit('updateOrderStatus',maxId), 5000)
-
           }
-          form.classList.add('was-validated')
 
-            // }
+          if (!this.errors.length) {
+            return true;
+          }
+
+          e.preventDefault();
+
+        },
+        validEmail: function (email) {
+          var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+          return re.test(email);
         },
         beforeDestroy() {
           clearTimeout(this.timeout)
