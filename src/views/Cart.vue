@@ -318,14 +318,18 @@ export default {
             //create order
             document.getElementById("btnClose").click()
             event.preventDefault()
-            this.$store.dispatch("createOrder")
 
-            //set timeer here
-            var ordernumbers =[];
-            this.$store.state.Orders.forEach(order => parseInt(ordernumbers.push(order.OrderNumber)))
-            var maxId =  Math.max(...ordernumbers)
-
-            this.timeout = setTimeout(() => this.$store.commit('updateOrderStatus',maxId), 5000)
+            //create order lastly
+            this.$store.dispatch("createOrder").then(()=> {
+                //set timeer here
+                var ordernumbers =[];
+                this.$store.state.Orders.forEach(order => parseInt(ordernumbers.push(order.OrderNumber)))
+                var maxId =  Math.max(...ordernumbers)
+                this.timeout = setTimeout(() => this.$store.commit('updateOrderStatus',maxId), 5000)
+                //redirect
+                this.$router.push({name: "Orders"})
+            })
+            
           }
 
           if (!this.errors.length) {
