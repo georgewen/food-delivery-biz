@@ -6,7 +6,7 @@
           <td>{{ order.UserName }}</td>
           <td>
             <div v-for="line in order.OrderLines" :key="line.Id">
-              <p>{{line.restaurant}} / {{line.name}} / {{line.qty}} / {{line.price}} </p>
+              <p>{{line.qty}} x {{line.name}} from {{line.restaurant}} @ {{line.price}} each </p>
             </div>
           </td>
           <td>

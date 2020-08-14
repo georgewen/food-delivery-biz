@@ -112,14 +112,15 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-md-3 mb-3">
+            <div class="col-md-6 mb-3">
               <label for="cc-expiration">Expiration</label>
-              <input type="text" class="form-control" id="cc-expiration" placeholder="" :required="formInput.paymentmethod=='credit'? true: false" v-model="formInput.Expiry">
+              <!-- <input type="text" class="form-control" id="cc-expiration" placeholder="" :required="formInput.paymentmethod=='credit'? true: false" v-model="formInput.Expiry"> -->
+              <datepicker placeholder="Select Date" format="dd/MM/yyyy" v-model="formInput.Expiry"></datepicker>
               <div class="invalid-feedback">
                 Expiration date required
               </div>
             </div>
-            <div class="col-md-3 mb-3">
+            <div class="col-md-6 mb-3">
               <label for="cc-cvv">CVV</label>
               <input type="text" class="form-control" id="cc-cvv" placeholder="" :required="formInput.paymentmethod=='credit'? true: false" v-model="formInput.cvv">
               <div class="invalid-feedback">
@@ -175,10 +176,13 @@
 
 <script>
 import { mapState } from 'vuex'
-
+import datepicker from 'vuejs-datepicker'
 export default {
     //name:'ShoppingCart',
     //props: ['items'],    
+    components:{
+      datepicker
+    },
     data() {
       return {
         timeout: null,
