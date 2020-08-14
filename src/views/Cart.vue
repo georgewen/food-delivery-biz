@@ -190,11 +190,13 @@ export default {
             }
         
     },
+
     methods:{
 
         removeItem(item){
             this.$store.commit('removeItem',item);
         },
+
         validateForm() {
           var form = document.getElementById("modalPayForm")
           if (form.checkValidity() === false) {
@@ -206,7 +208,8 @@ export default {
             //create order
             document.getElementById("btnClose").click()
             event.preventDefault()
-            this.$store.commit('submitOrder')            
+            this.$store.dispatch("createOrder")
+           //this.$store.commit('submitOrder')            
           }
           form.classList.add('was-validated')
 

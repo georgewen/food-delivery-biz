@@ -6,9 +6,10 @@
           <td>{{ order.UserName }}</td>
           <td>
             <select v-model="order.Status" :disabled="disabled">
+              <option>Received</option>
+              <option>Processing</option>
               <option>Delivered</option>
-              <option>Pending</option>
-              <option>NEW</option>
+              <option>Cancelled</option>
             </select>
           </td>
           <!-- <th><router-link to="/EditOrder" tag="button" class="btn btn-primary align-right">Edit</router-link></td> -->          

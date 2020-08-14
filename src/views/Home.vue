@@ -48,7 +48,8 @@ export default {
                     price: 12.34,
                     qty:1,
                     restaurant: 'Macdonald',
-                    image: "img/1.jpg",
+                    //image: "img/1.jpg",
+                    image: "http://via.placeholder.com/400x300",
                     description: "???"
                 },
                 {
@@ -57,7 +58,8 @@ export default {
                     price: 23.45,
                     qty:1,
                     restaurant: 'Domino',
-                    image: "img/2.jpg",
+                    //image: "img/2.jpg",
+                    image: "http://via.placeholder.com/400x300",
                     description: "????"
                 },
                 {
@@ -66,7 +68,8 @@ export default {
                     price: 23.45,
                     qty:1,
                     restaurant: 'Macdonald',
-                    image: "img/3.jpg",
+                    //image: "img/3.jpg",
+                    image: "http://via.placeholder.com/400x300",
                     description: "????"
                 },
                 {
@@ -75,7 +78,8 @@ export default {
                     price: 23.45,
                     qty:1,
                     restaurant: 'Macdonald',
-                    image: "img/10.jpeg",
+                    //image: "img/10.jpeg",
+                    image: "http://via.placeholder.com/400x300",
                     description: "????"
                 },
                 {
@@ -84,7 +88,8 @@ export default {
                     price: 23.45,
                     qty:1,
                     restaurant: 'Ms Pho',
-                    image: "img/20.jpeg",
+                    //image: "img/20.jpeg",
+                    image: "http://via.placeholder.com/400x300",
                     description: "????"
                 },
                 {
@@ -93,7 +98,8 @@ export default {
                     price: 12.45,
                     qty:1,
                     restaurant: 'Ms Pho',
-                    image: "img/21.jpeg",
+                    //image: "img/21.jpeg",
+                    image: "http://via.placeholder.com/400x300",
                     description: "????"
                 },
                 {
@@ -102,7 +108,8 @@ export default {
                     price: 12.45,
                     qty:1,
                     restaurant: 'Ms Pho',
-                    image: "img/22.jpeg",
+                    //image: "img/22.jpeg",
+                    image: "http://via.placeholder.com/400x300",
                     description: "????"
                 },                                                
                 {
@@ -111,7 +118,8 @@ export default {
                     price: 15.45,
                     qty:1,
                     restaurant: 'Ms Pho',
-                    image: "img/23.jpeg",
+                    //image: "img/23.jpeg",
+                    image: "http://via.placeholder.com/400x300",
                     description: "????"
                 },                
             ]

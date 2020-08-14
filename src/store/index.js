@@ -16,10 +16,10 @@ export default new Vuex.Store({
     CurrentUser: 'george',
     cartItems: cart ? JSON.parse(cart) : [],
     Orders: [          
-      {OrderNumber:1, OrderDate: '2020-07-01', SubTotal: 59.24, Status: 'Delivered',UserName: 'george', OrderLines: [{id:1,restaurant: 'Macdonald',qty:1, price: 12.34},{id:2,restaurant: 'Domino',qty:2,price:23.45}] },
-      {OrderNumber:2, OrderDate: '2020-07-02', SubTotal: 59.24, Status: 'Delivered',UserName: 'ethan',  OrderLines: [{id:1,restaurant: 'Macdonald',qty:1, price: 12.34},{id:2,restaurant: 'Domino',qty:2,price:23.45}] },
-      {OrderNumber:3, OrderDate: '2020-07-03', SubTotal: 59.24, Status: 'Delivered',UserName: 'george', OrderLines: [{id:1,restaurant: 'Macdonald',qty:1, price: 12.34},{id:5,restaurant: 'Ms Pho',qty:2,price:23.45}] },
-      {OrderNumber:4, OrderDate: '2020-07-04', SubTotal: 37.24, Status: 'Delivered',UserName: 'ethan',  OrderLines: [{id:1,restaurant: 'Macdonald',qty:1, price: 12.34},{id:6,restaurant: 'Ms Pho',qty:2,price:12.45}] }
+      {OrderNumber:1, OrderDate: '2020-07-01', SubTotal: 59.24, Status: 'Processing',UserName: 'george', OrderLines: [{id:1,restaurant: 'Macdonald',qty:1, price: 12.34},{id:2,restaurant: 'Domino',qty:2,price:23.45}] },
+      {OrderNumber:2, OrderDate: '2020-07-02', SubTotal: 59.24, Status: 'Delivered' ,UserName: 'ethan',  OrderLines: [{id:1,restaurant: 'Macdonald',qty:1, price: 12.34},{id:2,restaurant: 'Domino',qty:2,price:23.45}] },
+      {OrderNumber:3, OrderDate: '2020-07-03', SubTotal: 59.24, Status: 'Processing',UserName: 'george', OrderLines: [{id:1,restaurant: 'Macdonald',qty:1, price: 12.34},{id:5,restaurant: 'Ms Pho',qty:2,price:23.45}] },
+      {OrderNumber:4, OrderDate: '2020-07-04', SubTotal: 37.24, Status: 'Delivered' ,UserName: 'ethan',  OrderLines: [{id:1,restaurant: 'Macdonald',qty:1, price: 12.34},{id:6,restaurant: 'Ms Pho',qty:2,price:12.45}] }
     ],
   },
   mutations: {
@@ -71,7 +71,7 @@ export default new Vuex.Store({
 
     //create order from shopping cart items
 
-    submitOrder(state) {
+      CREATE_ORDER(state) {
 
       //console.log(state.cartItems.length)
 
@@ -94,7 +94,7 @@ export default new Vuex.Store({
         OrderNumber: maxId,
         OrderDate: today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate(),
         SubTotal: subtotal,
-        Status: 'NEW',
+        Status: 'Received',
         UserName: state.CurrentUser,
         OrderLines: lines          //loop thru order lines        
       }
@@ -118,13 +118,18 @@ export default new Vuex.Store({
 
   },
   actions: {
-
+    
     addNotification({ commit }, notification) {
       commit('PUSH_NOTIFICATION', notification)
     },
     removeNotification({ commit }, notificationToRemove) {
       commit('DELETE_NOTIFICATION', notificationToRemove)
     },
+
+    createOrder({ commit }) {
+      commit('CREATE_ORDER')
+    },
+
     deleteOrder({ commit }, order) {
       commit('DELETE_ORDER',order)
     }
