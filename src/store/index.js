@@ -71,6 +71,13 @@ export default new Vuex.Store({
 
     //create order from shopping cart items
 
+      updateOrderStatus(state,OrderNum) {
+        //let orderToUpdate = state.Orders.filter(order => order.OrderNumber===OrderNum);
+        var idx = state.Orders.findIndex(obj => obj.OrderNumber === OrderNum)
+        state.Orders[idx].Status = "Processing"
+        console.log("update status")
+      },
+
       CREATE_ORDER(state) {
 
       //console.log(state.cartItems.length)
@@ -102,6 +109,9 @@ export default new Vuex.Store({
       state.Orders.push(neworder)
       state.cartItems = []
       
+      //update after 5 sec
+      //setTimeout(function(){ alert("Hello"); }, 3000);
+
       console.log(neworder) 
 
       //state.Orders.push();

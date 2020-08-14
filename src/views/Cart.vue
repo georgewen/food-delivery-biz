@@ -177,6 +177,11 @@ import { mapState } from 'vuex'
 export default {
     //name:'ShoppingCart',
     //props: ['items'],    
+    data() {
+      return {
+        timeout: null
+      }
+    },
     computed:{
         cartLength() { return this.$store.getters.cartLength },
         ...mapState(['cartItems']),
@@ -209,12 +214,23 @@ export default {
             document.getElementById("btnClose").click()
             event.preventDefault()
             this.$store.dispatch("createOrder")
+
+            //set timeer here
+            var ordernumbers =[];
+            this.$store.state.Orders.forEach(order => parseInt(ordernumbers.push(order.OrderNumber)))
+            var maxId =  Math.max(...ordernumbers)
+
+            this.timeout = setTimeout(() => this.$store.commit('updateOrderStatus',maxId), 5000)
+
            //this.$store.commit('submitOrder')            
           }
           form.classList.add('was-validated')
 
             // }
         },
+        beforeDestroy() {
+          clearTimeout(this.timeout)
+        },        
     }
 }
 
