@@ -16,14 +16,14 @@
           <div class="row">
             <div class="col-md-6 mb-3">
               <label for="firstName">First name</label>
-              <input type="text" class="form-control" id="firstName" placeholder="" value="" required="">
+              <input type="text" class="form-control" id="firstName" placeholder="" v-model="formInput.firstname" required="">
               <div class="invalid-feedback">
                 Valid first name is required.
               </div>
             </div>
             <div class="col-md-6 mb-3">
               <label for="lastName">Last name</label>
-              <input type="text" class="form-control" id="lastName" placeholder="" value="" required="">
+              <input type="text" class="form-control" id="lastName" placeholder="" v-model="formInput.lastname" required="">
               <div class="invalid-feedback">
                 Valid last name is required.
               </div>
@@ -32,7 +32,7 @@
   
           <div class="mb-3">
             <label for="email">Email <span class="text-muted">(Optional)</span></label>
-            <input type="email" class="form-control" id="email" placeholder="you@example.com">
+            <input type="email" class="form-control" id="email" placeholder="you@example.com" v-model="formInput.email">
             <div class="invalid-feedback">
               Please enter a valid email address for shipping updates.
             </div>
@@ -40,7 +40,7 @@
   
           <div class="mb-3">
             <label for="address">Address</label>
-            <input type="text" class="form-control" id="address" placeholder="1234 Main St" required="">
+            <input type="text" class="form-control" id="address" placeholder="1234 Main St" required="" v-model="formInput.address">
             <div class="invalid-feedback">
               Please enter your shipping address.
             </div>
@@ -49,7 +49,7 @@
           <div class="row">
             <div class="col-md-4 mb-3">
               <label for="state">State</label>
-              <select class="custom-select d-block w-100" id="state" required="">
+              <select class="custom-select d-block w-100" id="state" required="" v-model="formInput.state">
                 <option value="">Choose...</option>
                 <option>ACT</option>
                 <option>NSW</option>
@@ -66,14 +66,14 @@
             </div>
             <div class="col-md-4 mb-3">
               <label for="zip">Zip</label>
-              <input type="text" class="form-control" id="zip" placeholder="" required="">
+              <input type="text" class="form-control" id="zip" placeholder="" required="" v-model="formInput.zip">
               <div class="invalid-feedback">
                 Zip code required.
               </div>
             </div>
             <div class="col-md-4 mb-3">
               <label for="zip">Phone</label>
-              <input type="text" class="form-control" id="phone" placeholder="" required="">
+              <input type="text" class="form-control" id="phone" placeholder="" required="" v-model="formInput.phone">
               <div class="invalid-feedback">
                 Phone number is required.
               </div>
@@ -85,18 +85,19 @@
   
           <div class="d-block my-3">
             <div class="custom-control custom-radio">
-              <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked="" required="">
+              <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked="" required="" v-model="formInput.paymentmethod" value="credit">
               <label class="custom-control-label" for="credit">Credit card</label>
             </div>
             <div class="custom-control custom-radio">
-              <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" required="">
+              <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" required="" v-model="formInput.paymentmethod" value="cash">
               <label class="custom-control-label" for="debit">Cash</label>
             </div>
           </div>
+      <div id="cc" v-bind:style="{ display: formInput.paymentmethod=='cash'? 'none':'block' }">
           <div class="row">
             <div class="col-md-6 mb-3">
               <label for="cc-name">Name on card</label>
-              <input type="text" class="form-control" id="cc-name" placeholder="" required="">
+              <input type="text" class="form-control" id="cc-name" placeholder="" required="" :value="formInput.firstname + ' ' + formInput.lastname">
               <small class="text-muted">Full name as displayed on card</small>
               <div class="invalid-feedback">
                 Name on card is required
@@ -104,7 +105,7 @@
             </div>
             <div class="col-md-6 mb-3">
               <label for="cc-number">Credit card number</label>
-              <input type="text" class="form-control" id="cc-number" placeholder="" required="">
+              <input type="text" class="form-control" id="cc-number" placeholder="" required="" v-model="formInput.cc">
               <div class="invalid-feedback">
                 Credit card number is required
               </div>
@@ -113,19 +114,20 @@
           <div class="row">
             <div class="col-md-3 mb-3">
               <label for="cc-expiration">Expiration</label>
-              <input type="text" class="form-control" id="cc-expiration" placeholder="" required="">
+              <input type="text" class="form-control" id="cc-expiration" placeholder="" required="" v-model="formInput.Expiry">
               <div class="invalid-feedback">
                 Expiration date required
               </div>
             </div>
             <div class="col-md-3 mb-3">
               <label for="cc-cvv">CVV</label>
-              <input type="text" class="form-control" id="cc-cvv" placeholder="" required="">
+              <input type="text" class="form-control" id="cc-cvv" placeholder="" required="" v-model="formInput.cvv">
               <div class="invalid-feedback">
                 Security code required
               </div>
             </div>
           </div>
+    </div>
           <hr class="mb-4">
           <button class="btn btn-primary btn-lg btn-block" type="submit">Pay</button>
         </form>
@@ -179,7 +181,20 @@ export default {
     //props: ['items'],    
     data() {
       return {
-        timeout: null
+        timeout: null,
+        formInput: {
+          firstname: "George",
+          lastname: "Wen",
+          email: "qwen@myune.edu.au",
+          address: "Sydney",
+          state: "NSW",
+          zip: "2000",
+          phone: "99998888",
+          paymentmethod: "credit",
+          cc: "1234-1234-1234-1234",
+          Expiry: "2022-12-31",
+          cvv: 100        
+        }
       }
     },
     computed:{
@@ -198,18 +213,33 @@ export default {
 
     methods:{
 
+        choosePayment() {
+
+          if (document.getElementById("credit").checked)
+          {
+              document.getElementById("cc").style.display="none"
+          }
+          if (document.getElementById("cash").checked)
+          {
+              document.getElementById("cc").style.display="block"
+          }
+        },
+
         removeItem(item){
             this.$store.commit('removeItem',item);
         },
 
         validateForm() {
+
           var form = document.getElementById("modalPayForm")
-          if (form.checkValidity() === false) {
+          if (form.checkValidity() === false && this.formInput.paymentmethod != "cash") {
             event.preventDefault()
             event.stopPropagation()
           }
           else
           {
+            //custom validation logic here...
+
             //create order
             document.getElementById("btnClose").click()
             event.preventDefault()
@@ -222,7 +252,6 @@ export default {
 
             this.timeout = setTimeout(() => this.$store.commit('updateOrderStatus',maxId), 5000)
 
-           //this.$store.commit('submitOrder')            
           }
           form.classList.add('was-validated')
 
