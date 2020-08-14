@@ -4,6 +4,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const { VueLoaderPlugin } = require('vue-loader');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 let buildconfig = {
     entry: "./src/app.js",
@@ -93,6 +94,11 @@ let buildconfig = {
                 }
             }
         }),
+        new CopyWebpackPlugin({
+         patterns:[
+             {from:'src/assets/img',to:'img'} 
+        ],
+        }),         
         new VueLoaderPlugin(),
         new HtmlWebpackPlugin({
             filename: 'index.html',

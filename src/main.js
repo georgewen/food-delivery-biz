@@ -3,6 +3,8 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
+//import jpg1 from './assets/img/1.jpg'
+
 //import 'bootstrap'; 
 //import 'bootstrap/dist/css/bootstrap.min.css';
 
