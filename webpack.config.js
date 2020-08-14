@@ -25,6 +25,13 @@ let buildconfig = {
                 use: 'vue-loader'
             },
             {
+                test: /\.css$/,
+                use: [
+                    'vue-style-loader',
+                    'css-loader'
+                ]
+            },            
+            {
                 test: /\.sass$/i,
                 use: [
                     { loader: "style-loader" },
@@ -40,6 +47,14 @@ let buildconfig = {
                     }
                 ]
             },
+            {
+                test: /\.scss$/,
+                use: [
+                  'vue-style-loader',
+                  'css-loader',
+                  'sass-loader'
+                ]
+              },            
             {
                 test: /\.(gif|png|jpe?g|svg)$/i,
                 use: [{

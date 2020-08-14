@@ -1,12 +1,18 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+//import * as notification from '../store/modules/notification.js' // <-- import it
 
 Vue.use(Vuex)
 
 let cart = window.localStorage.getItem('cart');
+let nextId = 1
 
 export default new Vuex.Store({
+  //modules: {
+  //    notification
+  //},
   state: {
+    notifications: [],
     CurrentUser: 'george',
     cartItems: cart ? JSON.parse(cart) : [],
     Orders: [          
@@ -18,10 +24,19 @@ export default new Vuex.Store({
   },
   mutations: {
 
+    PUSH_NOTIFICATION(state, notification) {
+      state.notifications.push({
+        ...notification,
+        id: nextId++
+      })
+    },
+    DELETE_NOTIFICATION(state, notificationToRemove) {
+      state.notifications = state.notifications.filter(
+        notification => notification.id !== notificationToRemove.id
+      )
+    },
+
     addToCart(state,itemToAdd){
-     // state.cartItems.push(itemToAdd);
-      //console.log(itemToAdd);
-      //let found = false;
 
       // Add the item or increase qty
 			let itemInCart = state.cartItems.filter(item => item.Id===itemToAdd.Id);
@@ -93,16 +108,27 @@ export default new Vuex.Store({
 
     },
 
-    deleteOrder(state,order){
+    DELETE_ORDER(state,order){
       let index = state.Orders.indexOf(order);
       if (index > -1) {
-          //let product = state.cartItems[index];
           state.Orders.splice(index, 1);
       }
+      
     }
 
   },
   actions: {
+
+    addNotification({ commit }, notification) {
+      commit('PUSH_NOTIFICATION', notification)
+    },
+    removeNotification({ commit }, notificationToRemove) {
+      commit('DELETE_NOTIFICATION', notificationToRemove)
+    },
+    deleteOrder({ commit }, order) {
+      commit('DELETE_ORDER',order)
+    }
+
   },
   modules: {
   },

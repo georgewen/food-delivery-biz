@@ -216,3 +216,19 @@ export default {
 }
 
 </script>
+<style scoped>
+.container{
+  padding:20px;
+  max-width:600px;
+}
+
+.input-qty {
+  width: 60px;
+  float: right
+}
+
+.table-cart > tr > td {
+  vertical-align: middle !important;
+}
+
+</style>

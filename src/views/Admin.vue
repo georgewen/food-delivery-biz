@@ -70,8 +70,15 @@ export default {
         // if (index > -1) {
         //     this.orders.splice(index, 1);
         // }
-        this.$store.commit('deleteOrder',order);
-        console.log("delete order: " + order.OrderNumber)
+        this.$store.dispatch('deleteOrder',order)
+        //this.$store.commit('deleteOrder',order);
+        console.log("delete order: " + order.OrderNumber)      
+        const notification = {
+            type: 'Notification',
+            message: 'Order No. ' + order.OrderNumber + ' deleted!'
+          }
+        this.$store.dispatch('addNotification', notification)
+
       },
 
       startInterval: function () {
@@ -86,7 +93,6 @@ export default {
 
       generateLineChart(){
 
-        console.log("here")
         // set the dimensions and margins of the graph
         var margin = {top: 10, right: 30, bottom: 30, left: 60},
             width = 460 - margin.left - margin.right,
@@ -104,7 +110,7 @@ export default {
                   "translate(" + margin.left + "," + margin.top + ")");
 
           var n = this.Orders.length;
-          console.log("number of ORders = " + n)
+          //console.log("number of ORders = " + n)
        
           // 5. X scale will use the index of our data
           var xScale = d3.scaleLinear()
@@ -175,7 +181,6 @@ export default {
         var lines = []
         this.Orders.forEach(order => 
         { 
-          //parseInt(ordernumbers.push(order.OrderNumber))
           order.OrderLines.forEach(line=> 
           {
             lines.push(line)
@@ -265,3 +270,24 @@ export default {
     }
 }
 </script>
+<style scoped>
+
+    body {
+    padding-top: 3.5rem;
+    }
+
+    .bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    }
+
+    @media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+    }
+    }
+</style>
