@@ -36,7 +36,7 @@
 import * as d3 from "d3";
 
 import EditOrder from '../components/EditOrder.vue'
-import { mapState } from 'vuex'
+import { mapState , mapGetters} from 'vuex'
 
 export default {
     components:{
@@ -44,6 +44,7 @@ export default {
     },
     computed: {
         ...mapState(['Orders']),
+      //  ...mapGetters(['myOrders'])
         //Orders() {
           //return this.$store.getters.myOrders
         //}
@@ -57,7 +58,7 @@ export default {
     mounted() {
       this.generatePieChart()
       this.generateLineChart()
-      this.startInterval()
+     /// this.startInterval()
     },
 
     beforeDestroy () {

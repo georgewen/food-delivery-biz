@@ -12,7 +12,7 @@
         </tr>
       </thead>
       <tbody>
-        <edit-order v-for="order in Orders" :key="order.OrderNumber" :order="order" @deleteOrder = "deleteOrder" :readonly="true"/>
+        <edit-order v-for="order in myOrders" :key="order.OrderNumber" :order="order" @deleteOrder = "deleteOrder" :readonly="true"/>
       </tbody>
     </table>
 
@@ -20,7 +20,7 @@
 </template>
 <script>
 import EditOrder from '../components/EditOrder.vue'
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 
 export default {
     components:{
@@ -28,9 +28,10 @@ export default {
     },
     computed: {
         ...mapState(['CurrentUser']),
-       Orders() {
-          return this.$store.getters.myOrders
-       }
+        ...mapGetters(['myOrders'])
+      // Orders() {
+      //    return this.$store.getters.myOrders
+      // }
     },
     data() {
       return { disabled: true   }
