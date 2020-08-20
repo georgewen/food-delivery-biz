@@ -49,6 +49,12 @@ export default {
           //return this.$store.getters.myOrders
         //}
     },
+    watch :{
+      Orders(val) {
+        this.generatePieChart()
+        this.generateLineChart()
+      }
+    },
     data() {
       return { 
         disabled: true ,
