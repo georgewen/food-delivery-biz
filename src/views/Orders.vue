@@ -20,19 +20,24 @@
 </template>
 <script>
 import EditOrder from '../components/EditOrder.vue'
-import { mapState, mapGetters } from 'vuex'
+import { mapState } from 'vuex'
 
 export default {
     components:{
       EditOrder
     },
     computed: {
-        ...mapState(['CurrentUser']),
-        ...mapGetters(['myOrders'])
+        ...mapState(['CurrentUser','myOrders']),
+       // ...mapGetters(['myOrders'])
       // Orders() {
       //    return this.$store.getters.myOrders
       // }
     },
+    created() {
+      this.$store.dispatch('getMyOrders');
+      //this.$store.dispatch('getOrders');
+
+    },    
     data() {
       return { disabled: true   }
     },

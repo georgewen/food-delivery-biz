@@ -44,6 +44,9 @@ export default {
     computed: {
     ...mapState(['CurrentUser','menuitems']),
     },
+    created() {
+      this.$store.dispatch('getMenuItems');
+    },
      methods:{
       addToCart(item){
         this.$store.commit('addToCart',item);

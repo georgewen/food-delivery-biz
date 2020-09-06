@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import FoodService from '../services/FoodService'
+
 //import * as notification from '../store/modules/notification.js' // <-- import it
 
 Vue.use(Vuex)
@@ -16,95 +18,101 @@ export default new Vuex.Store({
     CurrentUser: 'george',
     cartItems: cart ? JSON.parse(cart) : [],
     Orders: [          
-      {OrderNumber:1, OrderDate: '2020-07-01', SubTotal: 59.24, Status: 'Processing',UserName: 'george', OrderLines: [{id:1,name: "english breakfast",restaurant: 'Macdonald',qty:1, price: 12.34},{id:2,name: "pizza",restaurant: 'Domino',qty:2,price:23.45}] },
-      {OrderNumber:2, OrderDate: '2020-07-02', SubTotal: 59.24, Status: 'Delivered' ,UserName: 'ethan',  OrderLines: [{id:1,name: "english breakfast",restaurant: 'Macdonald',qty:1, price: 12.34},{id:2,name: "pizza",restaurant: 'Domino',qty:2,price:23.45}] },
-      {OrderNumber:3, OrderDate: '2020-07-03', SubTotal: 59.24, Status: 'Processing',UserName: 'george', OrderLines: [{id:1,name: "english breakfast",restaurant: 'Macdonald',qty:1, price: 12.34},{id:5,name: "special beef noodle",restaurant: 'Ms Pho',qty:2,price:23.45}] },
-      {OrderNumber:4, OrderDate: '2020-07-04', SubTotal: 37.24, Status: 'Delivered' ,UserName: 'ethan',  OrderLines: [{id:1,name: "english breakfast",restaurant: 'Macdonald',qty:1, price: 12.34},{id:6,name: "rice rool",restaurant: 'Ms Pho',qty:2,price:12.45}] }
+     // {"OrderNumber":1, "OrderDate": "2020-07-01", "SubTotal": 59.24, "Status": "Processing","Username": "george", "OrderLines": [{"Id":1,"name": "english breakfast","restaurant": "Macdonald","qty":1, "price": 12.34},{"Id":2,"name": "pizza","restaurant": "Domino","qty":2,"price":23.45}] },
+     // {"OrderNumber":2, "OrderDate": "2020-07-02", "SubTotal": 59.24, "Status": "Delivered" ,"Username": "ethan",  "OrderLines": [{"Id":1,"name": "english breakfast","restaurant": "Macdonald","qty":1, "price": 12.34},{"Id":2,"name": "pizza","restaurant": "Domino","qty":2,"price":23.45}] },
+     // {"OrderNumber":3, "OrderDate": "2020-07-03", "SubTotal": 59.24, "Status": "Processing","Username": "george", "OrderLines": [{"Id":1,"name": "english breakfast","restaurant": "Macdonald","qty":1, "price": 12.34},{"Id":5,"name": "special beef noodle","restaurant": "Ms Pho","qty":2,"price":23.45}] },
+     // {"OrderNumber":4, "OrderDate": "2020-07-04", "SubTotal": 37.24, "Status": "Delivered" ,"Username": "ethan",  "OrderLines": [{"Id":1,"name": "english breakfast","restaurant": "Macdonald","qty":1, "price": 12.34},{"Id":6,"name": "rice rool","restaurant": "Ms Pho","qty":2,"price":12.45}] }
     ],
-    menuitems: [
-      {
-          Id: 1,
-          name: "english breakfast",
-          price: 12.34,
-          qty:1,
-          restaurant: 'Macdonald',
-          image: "img/1.jpg",
-          //image: "http://via.placeholder.com/400x300",
-          description: "???"
-      },
-      {
-          Id: 2,
-          name: "pizza",
-          price: 16.95,
-          qty:1,
-          restaurant: 'Domino',
-          image: "img/2.jpg",
-          //image: "http://via.placeholder.com/400x300",
-          description: "????"
-      },
-      {
-          Id: 3,
-          name: "hamburger",
-          price: 15.45,
-          qty:1,
-          restaurant: 'Macdonald',
-          image: "img/3.jpg",
-          //image: "http://via.placeholder.com/400x300",
-          description: "????"
-      },
-      {
-          Id: 4,
-          name: "Hash Brown",
-          price: 5.45,
-          qty:1,
-          restaurant: 'Macdonald',
-          image: "img/10.jpeg",
-          //image: "http://via.placeholder.com/400x300",
-          description: "????"
-      },
-      {
-          Id: 5,
-          name: "Special Beef Noodle",
-          price: 12.95,
-          qty:1,
-          restaurant: 'Ms Pho',
-          image: "img/20.jpeg",
-          //image: "http://via.placeholder.com/400x300",
-          description: "????"
-      },
-      {
-          Id: 6,
-          name: "Rice Roll",
-          price: 11.45,
-          qty:1,
-          restaurant: 'Ms Pho',
-          image: "img/21.jpeg",
-          //image: "http://via.placeholder.com/400x300",
-          description: "????"
-      },
-      {
-          Id: 7,
-          name: "Chicken Noodle",
-          price: 13.45,
-          qty:1,
-          restaurant: 'Ms Pho',
-          image: "img/22.jpeg",
-          //image: "http://via.placeholder.com/400x300",
-          description: "????"
-      },                                                
-      {
-          Id: 8,
-          name: "Crispy Chicken Rice",
-          price: 14.45,
-          qty:1,
-          restaurant: 'Ms Pho',
-          image: "img/23.jpeg",
-          //image: "http://via.placeholder.com/400x300",
-          description: "????"
-      },                
-  ]    
+    myOrders: [], 
+    menuitems: []
+    // [
+    //   {
+    //    "Id": 1,
+    //    "name": "english breakfast",
+    //    "price": 12.34,
+    //    "qty":1,
+    //    "restaurant": "Macdonald",
+    //    "image": "img/1.jpg", 
+    //    "description": "???"
+    //    },
+    //    {
+    //    "Id": 2,
+    //    "name": "pizza",
+    //    "price": 16.95,
+    //    "qty":1,
+    //    "restaurant": "Domino",
+    //    "image": "img/2.jpg",
+    //    "description": "????"
+    //    },
+    //    {
+    //    "Id": 3,
+    //    "name": "hamburger",
+    //    "price": 15.45,
+    //    "qty":1,
+    //    "restaurant": "Macdonald",
+    //    "image": "img/3.jpg", 
+    //    "description": "????"
+    //    },
+    //    {
+    //    "Id": 4,
+    //    "name": "Hash Brown",
+    //    "price": 5.45,
+    //    "qty":1,
+    //    "restaurant": "Macdonald",
+    //    "image": "img/10.jpeg",
+    //    "description": "????"
+    //    },
+    //    {
+    //    "Id": 5,
+    //    "name": "Special Beef Noodle",
+    //    "price": 12.95,
+    //    "qty":1,
+    //    "restaurant": "Ms Pho",
+    //    "image": "img/20.jpeg",
+    //    "description": "????"
+    //    },
+    //    {
+    //    "Id": 6,
+    //    "name": "Rice Roll",
+    //    "price": 11.45,
+    //    "qty":1,
+    //    "restaurant": "Ms Pho",
+    //    "image": "img/21.jpeg",
+    //    "description": "????"
+    //    },
+    //    {
+    //    "Id": 7,
+    //    "name": "Chicken Noodle",
+    //    "price": 13.45,
+    //    "qty":1,
+    //    "restaurant": "Ms Pho",
+    //    "image": "img/22.jpeg",
+    //    "description": "????"
+    //    }, 
+    //    {
+    //    "Id": 8,
+    //    "name": "Crispy Chicken Rice",
+    //    "price": 14.45,
+    //    "qty":1,
+    //    "restaurant": "Ms Pho",
+    //    "image": "img/23.jpeg",
+    //    "description": "????"
+    //    }
+    //    ] 
   },
   mutations: {
+
+    PULL_MENUITEMS(state, items){
+      state.menuitems = items;
+    },
+
+    PULL_ORDERS(state, items){
+      state.Orders = items;
+    },
+
+    PULL_MYORDERS(state, items){
+      state.myOrders = items;
+    },
 
     PUSH_NOTIFICATION(state, notification) {
       state.notifications.push({
@@ -209,8 +217,30 @@ export default new Vuex.Store({
     }
 
   },
+
   actions: {
     
+    getMenuItems({commit}) {
+     
+      FoodService.getMenuItems().then(result => {
+        commit('PULL_MENUITEMS',result.data);
+      })
+    },
+
+    getOrders({commit}) {
+      FoodService.getOrders().then(result => {
+        commit("PULL_ORDERS", result.data);
+      })
+
+    },
+
+    getMyOrders({commit}) {
+      FoodService.getOrdersByUser({UserName: "george"}).then(result => {
+        commit("PULL_MYORDERS", result.data);
+      })
+
+    },
+
     addNotification({ commit }, notification) {
       commit('PUSH_NOTIFICATION', notification)
     },
@@ -234,8 +264,8 @@ export default new Vuex.Store({
       return state.cartItems.length
     },
     //filter by current userid
-    myOrders: (state) => {
-      return state.Orders.filter(order => order.UserName === state.CurrentUser)
-    }
+    // myOrders: (state) => {
+    //   return state.Orders.filter(order => order.UserName === state.CurrentUser)
+    // }
   }
 })
