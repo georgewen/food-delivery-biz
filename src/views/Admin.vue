@@ -77,13 +77,11 @@ export default {
     methods:{
 
      deleteOrder(order) {
-        // let index = this.orders.indexOf(order);
-        // if (index > -1) {
-        //     this.orders.splice(index, 1);
-        // }
+
         this.$store.dispatch('deleteOrder',order)
+
         //this.$store.commit('deleteOrder',order);
-        console.log("delete order: " + order.OrderNumber)      
+        //console.log("delete order: " + order.OrderNumber)      
         const notification = {
             type: 'Notification',
             message: 'Order No. ' + order.OrderNumber + ' deleted!'

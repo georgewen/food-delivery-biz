@@ -42,12 +42,16 @@ export default {
       return { disabled: true   }
     },
     methods:{
+
      deleteOrder(order) {
         // let index = this.orders.indexOf(order);
         // if (index > -1) {
         //     this.orders.splice(index, 1);
         // }
-        this.$store.commit('deleteOrder',order);
+        
+        //this.$store.commit('deleteOrder',order);
+        this.$store.dispatch("deleteOrder",order)
+
         console.log("delete order: " + order.OrderNumber)
       },
     }

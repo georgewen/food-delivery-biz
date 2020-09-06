@@ -209,6 +209,7 @@ export default new Vuex.Store({
     },
 
     DELETE_ORDER(state,order){
+
       let index = state.Orders.indexOf(order);
       if (index > -1) {
           state.Orders.splice(index, 1);
@@ -241,6 +242,12 @@ export default new Vuex.Store({
 
     },
 
+    deleteOrder({commit}, order) {
+      FoodService.deleteOrder({Id: order._id}).then( () => {
+        commit("DELETE_ORDER",order);
+      })
+    },
+
     addNotification({ commit }, notification) {
       commit('PUSH_NOTIFICATION', notification)
     },
@@ -251,10 +258,6 @@ export default new Vuex.Store({
     createOrder({ commit }) {
       commit('CREATE_ORDER')
     },
-
-    deleteOrder({ commit }, order) {
-      commit('DELETE_ORDER',order)
-    }
 
   },
   modules: {
