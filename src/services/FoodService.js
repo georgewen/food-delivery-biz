@@ -14,6 +14,10 @@ export default {
         return Api().get('/api/orders')
     },
 
+    createOrder(params) {
+        return Api().post('/api/orders', params);
+    },
+
     deleteOrder(params){
         return Api().delete('/api/orders/' + params.Id);
     },

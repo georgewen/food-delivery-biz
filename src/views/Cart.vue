@@ -280,10 +280,9 @@ export default {
              this.errors.push("postcode required.");
           }
 
+          var today = new Date()
           if (this.formInput.paymentmethod == 'credit') //vaidate cc payment
-          {
-            var today = new Date()
-            
+          {            
             if (this.formInput.Expiry < today ) { 
               this.errors.push("credit card expired !")
             }
@@ -320,12 +319,34 @@ export default {
             event.preventDefault()
 
             //create order lastly
-            this.$store.dispatch("createOrder").then(()=> {
+            var lines = []
+            var subtotal = 0
+            this.cartItems.forEach(line=> {        
+              lines.push({id: line.id, name: line.name, qty: line.qty, price: line.price, restaurant: line.restaurant})
+                subtotal += line.qty*line.price
+              }
+            )
+
+            let neworder = {
+              //OrderNumber: maxId,
+              orderdate: today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate(),
+              subtotal: subtotal,
+              status: 'Received',
+              username: this.$store.state.CurrentUser,
+              orderlines: lines          //loop thru order lines        
+              }
+
+            this.$store.dispatch("createOrder", neworder).then(()=> {
                 //set timeer here
-                var ordernumbers =[];
-                this.$store.state.Orders.forEach(order => parseInt(ordernumbers.push(order.OrderNumber)))
-                var maxId =  Math.max(...ordernumbers)
-                this.timeout = setTimeout(() => this.$store.commit('updateOrderStatus',maxId), 5000)
+                
+                //var ordernumbers =[];
+                //this.$store.state.Orders.forEach(order => parseInt(ordernumbers.push(order.OrderNumber)))
+                //var maxId =  Math.max(...ordernumbers)
+
+                //var maxId = this.$store.state.lastOrderNumber
+                //console.log("result: " + maxId)
+                //this.timeout = setTimeout(() => this.$store.commit('updateOrderStatus',maxId), 5000)
+
                 //redirect
                 this.$router.push({name: "Orders"})
             })

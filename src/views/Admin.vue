@@ -86,7 +86,7 @@ export default {
         //console.log("delete order: " + order.OrderNumber)      
         const notification = {
             type: 'Notification',
-            message: 'Order No. ' + order.OrderNumber + ' deleted!'
+            message: 'Order No. ' + order.ordernumber + ' deleted!'
           }
         this.$store.dispatch('addNotification', notification)
 

@@ -24,83 +24,14 @@ export default new Vuex.Store({
      // {"OrderNumber":4, "OrderDate": "2020-07-04", "SubTotal": 37.24, "Status": "Delivered" ,"Username": "ethan",  "OrderLines": [{"Id":1,"name": "english breakfast","restaurant": "Macdonald","qty":1, "price": 12.34},{"Id":6,"name": "rice rool","restaurant": "Ms Pho","qty":2,"price":12.45}] }
     ],
     myOrders: [], 
-    menuitems: []
-    // [
-    //   {
-    //    "Id": 1,
-    //    "name": "english breakfast",
-    //    "price": 12.34,
-    //    "qty":1,
-    //    "restaurant": "Macdonald",
-    //    "image": "img/1.jpg", 
-    //    "description": "???"
-    //    },
-    //    {
-    //    "Id": 2,
-    //    "name": "pizza",
-    //    "price": 16.95,
-    //    "qty":1,
-    //    "restaurant": "Domino",
-    //    "image": "img/2.jpg",
-    //    "description": "????"
-    //    },
-    //    {
-    //    "Id": 3,
-    //    "name": "hamburger",
-    //    "price": 15.45,
-    //    "qty":1,
-    //    "restaurant": "Macdonald",
-    //    "image": "img/3.jpg", 
-    //    "description": "????"
-    //    },
-    //    {
-    //    "Id": 4,
-    //    "name": "Hash Brown",
-    //    "price": 5.45,
-    //    "qty":1,
-    //    "restaurant": "Macdonald",
-    //    "image": "img/10.jpeg",
-    //    "description": "????"
-    //    },
-    //    {
-    //    "Id": 5,
-    //    "name": "Special Beef Noodle",
-    //    "price": 12.95,
-    //    "qty":1,
-    //    "restaurant": "Ms Pho",
-    //    "image": "img/20.jpeg",
-    //    "description": "????"
-    //    },
-    //    {
-    //    "Id": 6,
-    //    "name": "Rice Roll",
-    //    "price": 11.45,
-    //    "qty":1,
-    //    "restaurant": "Ms Pho",
-    //    "image": "img/21.jpeg",
-    //    "description": "????"
-    //    },
-    //    {
-    //    "Id": 7,
-    //    "name": "Chicken Noodle",
-    //    "price": 13.45,
-    //    "qty":1,
-    //    "restaurant": "Ms Pho",
-    //    "image": "img/22.jpeg",
-    //    "description": "????"
-    //    }, 
-    //    {
-    //    "Id": 8,
-    //    "name": "Crispy Chicken Rice",
-    //    "price": 14.45,
-    //    "qty":1,
-    //    "restaurant": "Ms Pho",
-    //    "image": "img/23.jpeg",
-    //    "description": "????"
-    //    }
-    //    ] 
+    menuitems: [],
+    lastOrderNumber: 0,
   },
   mutations: {
+
+    updateLastOrderNumber(state,lastorder) {
+      state.lastOrderNumber = lastorder
+    },
 
     PULL_MENUITEMS(state, items){
       
@@ -168,49 +99,19 @@ export default new Vuex.Store({
 
       updateOrderStatus(state,OrderNum) {
         //let orderToUpdate = state.Orders.filter(order => order.OrderNumber===OrderNum);
-        var idx = state.Orders.findIndex(obj => obj.OrderNumber === OrderNum)
-        state.Orders[idx].Status = "Processing"
-        console.log("update status")
+        var idx = state.myOrders.findIndex(obj => obj.ordernumber === OrderNum)
+        //TODO: need to update database 
+        state.myOrders[idx].status = "Processing"
       },
 
-      CREATE_ORDER(state) {
+      CREATE_ORDER(state, neworder) {
 
-      //console.log(state.cartItems.length)
+        state.Orders.push(neworder)
+        state.cartItems = []      
+        window.localStorage.removeItem('cart')
 
-      var today = new Date();
-
-      var ordernumbers =[];
-      state.Orders.forEach(order => parseInt(ordernumbers.push(order.OrderNumber)))
-      var maxId =  Math.max(...ordernumbers) + 1 
-      //var maxId = Math.floor(Math.random() * 100000)
-
-      var lines = []
-      var subtotal = 0
-      state.cartItems.forEach(line=> {        
-        lines.push({Id: line.Id, name: line.name, qty: line.qty, price: line.price, restaurant: line.restaurant})
-          subtotal += line.qty*line.price
-        }
-      )
-
-      let neworder = {
-        OrderNumber: maxId,
-        OrderDate: today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate(),
-        SubTotal: subtotal,
-        Status: 'Received',
-        UserName: state.CurrentUser,
-        OrderLines: lines          //loop thru order lines        
-      }
-
-      state.Orders.push(neworder)
-      state.cartItems = []
-      
-      //update after 5 sec
-      //setTimeout(function(){ alert("Hello"); }, 3000);
-
-      console.log(neworder) 
-
-      //state.Orders.push();
-
+        //update after 5 sec
+        //setTimeout(function(){ alert("Hello"); }, 3000);
     },
 
     DELETE_ORDER(state,order){
@@ -218,10 +119,8 @@ export default new Vuex.Store({
       let index = state.Orders.indexOf(order);
       if (index > -1) {
           state.Orders.splice(index, 1);
-      }
-      
+      }     
     }
-
   },
 
   actions: {
@@ -260,8 +159,16 @@ export default new Vuex.Store({
       commit('DELETE_NOTIFICATION', notificationToRemove)
     },
 
-    createOrder({ commit }) {
-      commit('CREATE_ORDER')
+    createOrder({ commit }, order) {
+      FoodService.createOrder(order).then( (result) => {
+        //var neworder = result.data
+        var lastOrderNumber = result.data.data.ordernumber
+        
+        commit('CREATE_ORDER', result.data.data)
+
+        this.timeout = setTimeout(() => commit('updateOrderStatus',lastOrderNumber), 5000)
+
+      })
     },
 
   },
