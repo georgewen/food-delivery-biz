@@ -17,7 +17,7 @@
         </tr>
       </thead>
       <tbody>
-        <edit-order v-for="order in Orders" :key="order.OrderNumber" :order="order" @deleteOrder = "deleteOrder"/>
+        <edit-order v-for="order in Orders" :key="order.ordernumber" :order="order" @deleteOrder = "deleteOrder"/>
       </tbody>
     </table>
   </div>
@@ -49,12 +49,14 @@ export default {
           //return this.$store.getters.myOrders
         //}
     },
+
     watch :{
       Orders(val) {
         this.generatePieChart()
         this.generateLineChart()
       }
     },
+
     data() {
       return { 
         disabled: true ,
@@ -133,7 +135,7 @@ export default {
           // 7. d3's line generator
           var line = d3.line()
               .x(function(d, i) { return xScale(i); }) // set the x values for the line generator
-              .y(function(d) { return yScale(d.SubTotal); }) // set the y values for the line generator 
+              .y(function(d) { return yScale(d.subtotal); }) // set the y values for the line generator 
               .curve(d3.curveMonotoneX) // apply smoothing to the line
 
           // 8. An array of objects of length N. Each object has key -> value pair, the key being "y" and the value is a random number
@@ -171,7 +173,7 @@ export default {
               .enter().append("circle") // Uses the enter().append() method
                 .attr("class", "dot") // Assign a class for styling
                 .attr("cx", function(d, i) { return xScale(i) })
-                .attr("cy", function(d) { return yScale(d.SubTotal) })
+                .attr("cy", function(d) { return yScale(d.subtotal) })
                 .attr("r", 5)
 
             svg.append("g")
@@ -189,7 +191,7 @@ export default {
         var lines = []
         this.Orders.forEach(order => 
         { 
-          order.OrderLines.forEach(line=> 
+          order.orderlines.forEach(line=> 
           {
             lines.push(line)
           }

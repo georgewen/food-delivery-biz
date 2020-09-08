@@ -12,7 +12,7 @@
         </tr>
       </thead>
       <tbody>
-        <edit-order v-for="order in myOrders" :key="order.OrderNumber" :order="order" @deleteOrder = "deleteOrder" :readonly="true"/>
+        <edit-order v-for="order in myOrders" :key="order.ordernumber" :order="order" @deleteOrder = "deleteOrder" :readonly="true"/>
       </tbody>
     </table>
 

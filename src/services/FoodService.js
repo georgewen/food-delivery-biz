@@ -3,20 +3,40 @@ import Api from './api'
 export default {
 
     getMenuItems () {
-        return Api().get('/menu')
+        return Api().get('/api/menuitems')
+    },
+
+    getMenuItembyId (params) {
+        return Api().get('/api/menuitems/' + params.Id)
     },
 
     getOrders () {
-        return Api().get('/order')
+        return Api().get('/api/orders')
     },
 
     deleteOrder(params){
-        return Api().delete('/order/' + params.Id);
+        return Api().delete('/api/orders/' + params.Id);
     },
 
     getOrdersByUser (params) {
-        return Api().get('/order/my/' + params.UserName)
+        return Api().get('/api/myorders/' + params.UserName)
     },
+
+    // getMenuItems () {
+    //     return Api().get('/menu')
+    // },
+
+    // getOrders () {
+    //     return Api().get('/order')
+    // },
+
+    // deleteOrder(params){
+    //     return Api().delete('/order/' + params.Id);
+    // },
+
+    // getOrdersByUser (params) {
+    //     return Api().get('/order/my/' + params.UserName)
+    // },
 
     //getWord (params) {
     //    return Api().get('/menu/' + params.id)

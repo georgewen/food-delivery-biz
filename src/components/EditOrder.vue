@@ -1,16 +1,16 @@
 <template>
          <tr>
-          <td>{{ order.OrderNumber}}</td>
-          <td>{{ order.OrderDate }}</td>
-          <td>{{ order.SubTotal }}</td>
-          <td>{{ order.UserName }}</td>
+          <td>{{ order.ordernumber}}</td>
+          <td>{{ order.orderdate }}</td>
+          <td>{{ order.subtotal }}</td>
+          <td>{{ order.username }}</td>
           <td>
-            <div v-for="line in order.OrderLines" :key="line.Id">
+            <div v-for="line in order.orderlines" :key="line.Id">
               <p>{{line.qty}} x {{line.name}} from {{line.restaurant}} @ {{line.price}} each </p>
             </div>
           </td>
           <td>
-            <select v-model="order.Status" :disabled="disabled">
+            <select v-model="order.status" :disabled="disabled">
               <option>Received</option>
               <option>Processing</option>
               <option>Delivered</option>

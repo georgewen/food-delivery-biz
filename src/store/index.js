@@ -103,6 +103,9 @@ export default new Vuex.Store({
   mutations: {
 
     PULL_MENUITEMS(state, items){
+      
+      console.log(items);
+
       state.menuitems = items;
     },
 
@@ -129,7 +132,9 @@ export default new Vuex.Store({
     addToCart(state,itemToAdd){
 
       // Add the item or increase qty
-			let itemInCart = state.cartItems.filter(item => item.Id===itemToAdd.Id);
+      //console.log(itemToAdd.id);
+
+			let itemInCart = state.cartItems.filter(item => item.id===itemToAdd.id);
 			let isItemInCart = itemInCart.length > 0;
 
       if (isItemInCart === false) {
@@ -224,26 +229,26 @@ export default new Vuex.Store({
     getMenuItems({commit}) {
      
       FoodService.getMenuItems().then(result => {
-        commit('PULL_MENUITEMS',result.data);
+        commit('PULL_MENUITEMS',result.data.data);
       })
     },
 
     getOrders({commit}) {
       FoodService.getOrders().then(result => {
-        commit("PULL_ORDERS", result.data);
+        commit("PULL_ORDERS", result.data.data);
       })
 
     },
 
     getMyOrders({commit}) {
       FoodService.getOrdersByUser({UserName: "george"}).then(result => {
-        commit("PULL_MYORDERS", result.data);
+        commit("PULL_MYORDERS", result.data.data);
       })
 
     },
 
     deleteOrder({commit}, order) {
-      FoodService.deleteOrder({Id: order._id}).then( () => {
+      FoodService.deleteOrder({Id: order.ordernumber}).then( () => {
         commit("DELETE_ORDER",order);
       })
     },
