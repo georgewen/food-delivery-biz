@@ -99,7 +99,7 @@ export default new Vuex.Store({
 
       updateOrderStatus(state,OrderNum) {
         //let orderToUpdate = state.Orders.filter(order => order.OrderNumber===OrderNum);
-        var idx = state.myOrders.findIndex(obj => obj.ordernumber === OrderNum)
+        var idx = state.myOrders.findIndex(obj => obj._id === OrderNum)
         //TODO: need to update database 
         state.myOrders[idx].status = "Processing"
       },
@@ -147,7 +147,7 @@ export default new Vuex.Store({
     },
 
     deleteOrder({commit}, order) {
-      FoodService.deleteOrder({Id: order.ordernumber}).then( () => {
+      FoodService.deleteOrder({Id: order._id}).then( () => {
         commit("DELETE_ORDER",order);
       })
     },
@@ -162,9 +162,11 @@ export default new Vuex.Store({
     createOrder({ commit }, order) {
       FoodService.createOrder(order).then( (result) => {
         //var neworder = result.data
-        var lastOrderNumber = result.data.data.ordernumber
+        var lastOrderNumber = result.data.data._id
         
-        commit('CREATE_ORDER', result.data.data)
+        console.log(lastOrderNumber)
+
+        commit('CREATE_ORDER', result.data.data)        
 
         this.timeout = setTimeout(() => commit('updateOrderStatus',lastOrderNumber), 5000)
 

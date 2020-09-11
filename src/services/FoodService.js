@@ -23,7 +23,7 @@ export default {
     },
 
     getOrdersByUser (params) {
-        return Api().get('/api/myorders/' + params.UserName)
+        return Api().get('/api/orders/user/' + params.UserName)
     },
 
     // getMenuItems () {

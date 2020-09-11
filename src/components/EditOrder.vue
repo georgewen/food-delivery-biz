@@ -1,6 +1,6 @@
 <template>
          <tr>
-          <td>{{ order.ordernumber}}</td>
+          <td>{{ order._id}}</td>
           <td>{{ order.orderdate }}</td>
           <td>{{ order.subtotal }}</td>
           <td>{{ order.username }}</td>
