@@ -224,7 +224,7 @@ export default {
     },
     computed:{
         cartLength() { return this.$store.getters.cartLength },
-        ...mapState(['cartItems']),
+        ...mapState(['cartItems','lastOrderNumber']),
 
         Total() {
             let total = 0;
@@ -337,18 +337,12 @@ export default {
               }
 
             this.$store.dispatch("createOrder", neworder).then(()=> {
-                //set timeer here
-                
-                //var ordernumbers =[];
-                //this.$store.state.Orders.forEach(order => parseInt(ordernumbers.push(order.OrderNumber)))
-                //var maxId =  Math.max(...ordernumbers)
-
-                //var maxId = this.$store.state.lastOrderNumber
-                //console.log("result: " + maxId)
-                //this.timeout = setTimeout(() => this.$store.commit('updateOrderStatus',maxId), 5000)
-
                 //redirect
-                this.$router.push({name: "Orders"})
+                //var lastId = this.lastOrderNumber
+                //console.log("update status: " + lastId)
+                //this.timeout = setTimeout(() => this.$store.commit('updateOrderStatus',lastId), 5000)
+                //this.$router.push({name: "Orders"})
+
             })
             
           }

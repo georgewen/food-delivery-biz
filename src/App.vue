@@ -5,7 +5,7 @@
       <router-link to="Orders">My Orders</router-link> |
       <router-link to="Cart">Cart  ({{ $store.getters.cartLength }}) </router-link> |
       <router-link to="Admin">Admin</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link to="About">About</router-link>
     </div>
     <router-view/>
     <NotificationContainer/>

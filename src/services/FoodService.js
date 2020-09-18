@@ -14,6 +14,10 @@ export default {
         return Api().get('/api/orders')
     },
 
+    getOrder (params) {
+        return Api().get('/api/orders/' + params.Id)
+    },
+
     createOrder(params) {
         return Api().post('/api/orders', params);
     },
@@ -26,6 +30,9 @@ export default {
         return Api().get('/api/orders/user/' + params.UserName)
     },
 
+    updateOrder(id, order) {
+        return Api().put('api/orders/' + id, order) 
+    }
     // getMenuItems () {
     //     return Api().get('/menu')
     // },
